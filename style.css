@@ -1,0 +1,300 @@
+#sidebar {
+	height: 800px;
+	width: 250px;
+	margin-left: 5px;
+	float: left;
+}
+
+#surface {
+	position: relative;
+	float: left;
+	height: 800px;
+	width: 1000px;
+}
+
+#surfaceOverlay {
+	position: relative;
+	margin: 10px;
+	z-index: 10;
+	pointer-events: none;
+}
+
+#sehLogo {
+	float: right;
+}
+
+#fpsCounter {
+	float: left;
+}
+
+#surface3D {
+	position: absolute;
+	z-index: 8;
+}
+
+#webglinfo {
+	height: 600px;
+	width: 250px;
+	border: 1px solid black;
+}
+
+#webgldata {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-family: "Verdana";
+	font-size: 14px;
+	height: 338px;
+	width: 250px;
+	border: 1px solid black;
+	margin-top: 5px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+/*-----------------------*/
+/* ==WebGLData Buttons== */
+/*-----------------------*/
+#unselectButton {
+	width: 150px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#editButton {
+	width: 150px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#saveButton {
+	width: 150px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+.editButtonSmall {
+	width: 40px;
+}
+/*-----------------------*/
+/* ==    Pos Table    == */
+/*-----------------------*/
+#posSelLeft {
+	float: left;
+}
+#posSelRight {
+	float: right;
+}
+
+#content {
+	width: auto;
+	display: inline-block;
+}
+
+body {
+	font-family: "Verdana";
+	font-size: 14px;
+	text-align: center;
+}
+
+#rotation {
+	margin-top: 10px;
+}
+
+#resetbutton {
+	margin-top: 15px;
+}
+
+#colorplot {
+	margin-top: 10px;
+}
+
+#infocontent {
+	height: 450px;
+	width: 250px;
+	text-align: center;
+	border-bottom: 1px solid black;
+}
+
+#zoomnumber {
+	margin-top: 10px;
+}
+
+#zoomtext {
+	margin-top: 15px;
+}
+
+#buttonLeft {
+	float: left;
+	margin-top: 5px;
+	margin-left: 85px;
+}
+
+#buttonRight {
+	float: left;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+ul.datalist {
+	font-family: "Verdana";
+	font-size: 14px;
+	list-style-type: none;
+	margin: 0;
+	margin-left: 10px;
+	padding: 0;
+}
+
+ul.datalist li {
+	display: inline;
+}
+
+#infobottom {
+	text-align: center;
+}
+
+#controllist {
+	text-align: left;
+}
+
+#hallSel {
+	margin-top: 15px;
+}
+
+#dataSel {
+	margin-top: 10px;
+}
+
+#WebGLDataTable, #WebGLDataTable tr, #WebGLDataTable td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+#WebGLDataTable {
+	width: 175px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	font-family: "Verdana";
+	font-size: 14px;
+}
+
+#WebGLDataMissing, #WebGLDataMissing tr, #WebGLDataMissing td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+#WebGLDataMissing {
+	width: 175px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	font-family: "Verdana";
+	font-size: 14px;
+}
+
+/*--------------------*/
+/* ==    Footer    == */
+/*--------------------*/
+footer  {
+
+}
+
+#datacont {
+	display: none;
+}
+
+#sliderCanvasContainer {
+	float: left;
+	margin-top: 5px;
+	width: 1000px;
+	height: 150px;
+	border: solid black 1px;
+}
+
+#sliderCanvasOverlay {
+	position: relative;
+	float: left;
+	z-index: 9;
+}
+
+#sliderCanvasContent {
+	position: absolute;
+	z-index: 7;
+}
+
+#historyDataCanvas {
+	z-index: 12;
+	position: absolute;
+	border-bottom: solid black 1px;
+}
+
+#historySliderCanvas {
+	z-index: 14;
+	position: relative;
+	float: left;
+}
+
+#timeSlider {
+	width: 950px;
+	margin-left: 0;
+}
+
+#historySettingsButton {
+	visibility: hidden;
+}
+
+/* Popup container */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
