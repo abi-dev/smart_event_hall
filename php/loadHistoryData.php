@@ -2,6 +2,16 @@
 	$con = mysqli_connect("localhost", "root", "", "sensSEH");
     if( !$con ) die("Error connecting to the Database: ".mysqli_connect_error() );
 
+    $q = "select time, avg(temp) as avgTemp from sensData 
+    where sensID = ".$_POST['curSel']."
+    and date(time) >=".$_POST['startDate']."
+    and date_sub(`time`, interval 4 hour)
+    group by date(time), hour(time) div 4
+    limit 20";
+
+
+select time as Hour, count(*) as NumData, avg(temp) as AvgTemp from sensData where sensID="0" and date(time)>="2006-1-1" and date_sub(`time`, interval 4 hour) group by date(time), hour(time) div 4 limit 20;
+
 	$q = "select time, sensID, temp, hum from sensData;";
 	$res = mysqli_query($con, $q);
 	if( !$res )	die("Query failed:".mysqli_error($con) );

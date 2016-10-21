@@ -255,7 +255,50 @@ function historySettingsButtonClicked() {
     historySettings.classList.toggle('show');
 }
 
-function historyTimeScaleChanged() {
+function historyDataChanged() {
+    var timeScale = document.getElementById("timeScaleSel");
+    var dateTypeSel = document.getElementById("dateTypeSel");
+    var date = document.getElementById("fromDate");
 
+    date = new Date(date.value);
+    var data;
+    var startDate = new Date();
+
+    data = toStartDate(timeScale.value, dateTypeSel.value, date);
+   
+    if(curSel != null) {
+        $.post("../php/loadHistoryData.php", 
+            {
+                mode: ""+document.getElementById("modeSel"),
+                startDate: data.startDate,
+                dateType: ""+document.getElementById("dateTypeSel"),
+                span: data.scale,
+                curSel: curSel
+            },
+            function (data) {
+
+            sensData = JSON.parse(data);
+            for(var i = 0; i<sensData.length;i++) {
+                sensData[i].pos = [sensData[i].posX, sensData[i].posY, sensData[i].posZ];
+            }
+
+            if(curSel != null) {
+                if (editStation == true) {
+                    posXOld = toWebGLCoords([document.getElementById("posXField").value,document.getElementById("posYField").value,document.getElementById("posZField").value]).x;
+                    posYOld = toWebGLCoords([document.getElementById("posXField").value,document.getElementById("posYField").value,document.getElementById("posZField").value]).y;
+                    posZOld = toWebGLCoords([document.getElementById("posXField").value,document.getElementById("posYField").value,document.getElementById("posZField").value]).z;
+                } else {
+                    posXOld = null; posYOld = null; posZOld = null;
+                }
+                setWebGLData();
+                if(editStation == true) {
+                    document.getElementById("posXField").value = (toViewCoords([posXOld, posYOld, posZOld]).x).toFixed(0);
+                    document.getElementById("posYField").value = (toViewCoords([posXOld, posYOld, posZOld]).y).toFixed(0);
+                    document.getElementById("posZField").value = (toViewCoords([posXOld, posYOld, posZOld]).z).toFixed(0);
+                }
+            } else {
+                listMissingData();
+            }
+        });
+    }
 }
-

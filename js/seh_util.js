@@ -118,3 +118,45 @@ function humToColor(temp) {
 
 	return [r, g, b];
 }
+
+function toStartDate(timeScale, dateType, date) {
+	var startDate = date;
+	var scale = 0;
+
+	switch(timeScale) {
+		case "0":
+			scale = 5 * 365;
+			break;
+		case "1":
+			scale = 20 * 30;
+			break;
+		case "2":
+			scale = 20 * 7;
+			break;
+		case "3":
+			scale = 20;
+			break;
+		case "4":
+			scale = 3;
+			break;
+		case "5":
+			scale = 1;
+			break;
+		default:
+			scale = 0;
+			break;
+	}
+
+	if(dateType == 1) {
+		startDate = date;
+	} else if(dateType == 0) {
+		startDate.setDate((startDate.getDate() - Math.floor(scale/2)));
+	} else if(dateType == 2) {
+		startDate.setDate((startDate.getDate() - scale));
+	}
+
+	return {
+		startDate: startDate,
+		scale: scale
+	};
+}
