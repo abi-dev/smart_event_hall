@@ -81,23 +81,23 @@
                     <div class="popup">
                       <button type="button" id="historySettingsButton" onclick="historySettingsButtonClicked()">Settings</button>
                       <span class="popuptext" id="myPopup">
-                            <select id="timeScaleSel" onChange="historyTimeScaleChanged()">
-                                <option value="0">5 years</option>
-                                <option value="1">20 months</option>
-                                <option value="2">20 weeks</option>
-                                <option value="3">20 days</option>
-                                <option value="4">3 days</option>
-                                <option value="5">1 day</option>
+                            <select id="timeScaleSel" onchange="historyDataChanged()">
+                                <option value="0">Years</option>
+                                <option value="1">Months</option>
+                                <option value="2">Weeks</option>
+                                <option value="3">Days(20)</option>
+                                <option value="4">Days(3)</option>
+                                <option value="5">Hours</option>
                             </select>
 
-                            <select id="dateTypeSel" onchange="">
+                            <select id="dateTypeSel" onchange="historyDataChanged()">
                                 <option value="0">mid</option>
                                 <option value="1">start</option>
                                 <option value="2">end</option>
                             </select>
 
                             </br> Date:
-                            <input type="date" id="fromDate">
+                            <input type="date" id="fromDate" onchange="historyDataChanged()">
                       </span>
                     </div>
     		   	</div>

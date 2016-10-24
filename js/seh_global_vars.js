@@ -5,6 +5,12 @@
     Author: Benjamin Ableidinger
 */
 
+var historyData = [];
+
+var labels = []; // history chart labels
+
+var data = []; // history chart data
+
 var sliderDragActive = false; // true if history slider is being dragged
 
 var sliderPos = 50; // postion of the slider on the datahistory canvas

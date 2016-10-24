@@ -255,7 +255,32 @@ function historySettingsButtonClicked() {
     historySettings.classList.toggle('show');
 }
 
-function historyTimeScaleChanged() {
+function historyDataChanged() {
+    var timeScale = document.getElementById("timeScaleSel");
+    var dateTypeSel = document.getElementById("dateTypeSel");
+    var date = document.getElementById("fromDate");
 
+    date = new Date(date.value);
+    var startDate = new Date();
+
+    var temp = toStartDate(timeScale.value, dateTypeSel.value, date);
+    
+    if(curSel != null) {
+        $.post("../php/loadHistoryData.php", 
+            {
+                mode: ""+document.getElementById("modeSel"),
+                startDate: temp.startDate.toISOString().substring(0, 10),
+                dateType: ""+document.getElementById("dateTypeSel"),
+                span: ""+document.getElementById("timeScaleSel"),
+                curSel: curSel
+            },
+            function (data) {
+                historyData = JSON.parse(data);
+                console.log(data);
+                /*$.each(historyData, function(time, value) {
+                    console.log(time, value);
+                };*/
+
+        });
+    }
 }
-
