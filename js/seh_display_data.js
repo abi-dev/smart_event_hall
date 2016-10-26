@@ -213,7 +213,7 @@ function drawHistory() {
                 label: label,
                 fill: false,
                 lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
+                backgroundColor: "rgba(0, 0, 0,1)",
                 borderWidth: 2,
                 borderColor: "rgba(30, 116, 255,1)",
                 borderCapStyle: 'butt',
@@ -232,8 +232,34 @@ function drawHistory() {
                 data: historyData.avgTemp,
                 spanGaps: false,
             }
-        ]
+        ],
+        lineAtIndex: lineIndex
     }
+
+    var originalLineDraw = Chart.controllers.line.prototype.draw;
+    Chart.helpers.extend(Chart.controllers.line.prototype, {
+      draw: function() {
+        originalLineDraw.apply(this, arguments);
+
+        var chart = this.chart;
+        var ctx = chart.chart.ctx;
+
+        var index = chart.config.data.lineAtIndex;
+        if (index) {
+          var xaxis = chart.scales['x-axis-0'];
+          var yaxis = chart.scales['y-axis-0'];
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(xaxis.getPixelForValue(undefined, index), yaxis.top);
+          ctx.strokeStyle = '#ff0000';
+          ctx.lineTo(xaxis.getPixelForValue(undefined, index), yaxis.bottom);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    });
+
     var historyChart = new Chart(history2DContext, {
     type: 'line',
     data: data,
@@ -248,9 +274,15 @@ function drawHistory() {
             xAxes: [{
                 //display: false
             }]
-        }
+        },
     }
     });
+
+    historyCanvas.onclick = function(e) {
+        var selPoint = historyChart.getElementsAtEvent(e);
+        lineIndex = selPoint[0]._index;
+        drawHistory();
+    }
 }
 /*
 function drawSlider() {

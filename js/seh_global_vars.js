@@ -5,6 +5,8 @@
     Author: Benjamin Ableidinger
 */
 
+var lineIndex = null;
+
 var historyData = {
 	time: [],
 	avgTemp: []
