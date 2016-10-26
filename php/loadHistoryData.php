@@ -20,11 +20,9 @@
 
     $q = "select time, avg(temp) as avgTemp from sensData 
     where sensID = ".$_POST['curSel']." 
-    and date(time) >= ".$_POST['startDate']." 
+    and date(time) >= \"".$_POST['startDate']."\" 
     group by year(time)".$groupBy." 
     limit 20";
-
-    error_log($q);
 
 	$res = mysqli_query($con, $q);
 	if( !$res )	die("Query failed:".mysqli_error($con) );
@@ -32,10 +30,15 @@
 	if( mysqli_num_rows($res) >0 )
 	{
 		$dataRead = array();
+        $dataRead['time'] = array();
+        $dataRead['avgTemp'] = array();
+
+        $dataID = 0;
 		while( $row = mysqli_fetch_assoc($res) )
 		{
-			$dataRead['time'] = $row['time'];
-			$dataRead['avgTemp'] = $row['avgTemp'];
+            $dataRead['time'][$dataID] = date('d.m.Y', strtotime($row['time']));
+            $dataRead['avgTemp'][$dataID] = $row['avgTemp'];
+            $dataID++;
 		}
 	}
 

@@ -493,8 +493,8 @@ function tick() {
 function webGLStart() {
 	generateColorPlot(); // draw color spectrum
     //initHistory(); // initialize data history chart.js
-    drawHistory(); // draw historyCanvas
-    drawSlider();
+    //drawHistory(); // draw historyCanvas
+    //drawSlider();
 
     listMissingData(); // list stations with missing data
 
@@ -517,15 +517,15 @@ function webGLStart() {
 	document.getElementById("webGLCanvas").onmouseout = function() {onMouseOutWebGL()};
 
     // add mouseoverSliderCanvas events
-    document.getElementById("sliderCanvasContent").onmouseover = function() {onMouseOverSliderCanvas()};
-    document.getElementById("sliderCanvasContent").onmouseout = function() {onMouseOutSliderCanvas()};
+    //document.getElementById("sliderCanvasContent").onmouseover = function() {onMouseOverSliderCanvas()};
+    //document.getElementById("sliderCanvasContent").onmouseout = function() {onMouseOutSliderCanvas()};
 
     // add mouseposition
     canvas.addEventListener("mousedown", getPosition, false);
 
-    var sliderCanvas = document.getElementById("historySliderCanvas");
-    sliderCanvas.addEventListener("mousedown", onSliderCanvasClicked, false);
-    sliderCanvas.addEventListener("mouseup", onSliderCanvasReleased, false);
+    //var sliderCanvas = document.getElementById("historySliderCanvas");
+    //sliderCanvas.addEventListener("mousedown", onSliderCanvasClicked, false);
+    //sliderCanvas.addEventListener("mouseup", onSliderCanvasReleased, false);
 
     // set background color of the canvas
     gl.clearColor(1.0, 1.0, 1.0, 1.0);

@@ -213,34 +213,36 @@ footer  {
 	height: 150px;
 	border: solid black 1px;
 }
-
+/*
 #sliderCanvasOverlay {
 	position: relative;
 	float: left;
 	z-index: 9;
-}
-
+}*/
+/*
 #sliderCanvasContent {
 	position: absolute;
 	z-index: 7;
-}
+	padding: 2px;
+}*/
 
 #historyDataCanvas {
-	z-index: 12;
-	position: absolute;
-	border-bottom: solid black 1px;
+	/*z-index: 12;
+	position: absolute;*/
+	float: left;
 }
-
+/*
 #historySliderCanvas {
 	z-index: 14;
 	position: relative;
 	float: left;
-}
+}*/
 
+/*
 #timeSlider {
 	width: 950px;
 	margin-left: 0;
-}
+}*/
 
 #historySettingsButton {
 	visibility: hidden;

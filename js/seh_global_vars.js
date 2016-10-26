@@ -5,7 +5,10 @@
     Author: Benjamin Ableidinger
 */
 
-var historyData = [];
+var historyData = {
+	time: [],
+	avgTemp: []
+};
 
 var labels = []; // history chart labels
 

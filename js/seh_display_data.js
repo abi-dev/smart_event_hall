@@ -201,24 +201,13 @@ function listMissingData() {
 
 /*  DATA HISTORY CANVAS CONTENT FUNCTIONS   */
 
-function initHistory() {
-    var historyCanvas = document.getElementById("historySliderCanvas");
-    var history2DContext = historyCanvas.getContext("2d");
-    var historyChart = new Chart(history2DContext, {
-    type: 'line',
-    data: data,
-    options: options
-});
-
-}
-
 function drawHistory() {
     var historyCanvas = document.getElementById("historyDataCanvas");
     var history2DContext = historyCanvas.getContext("2d");
     history2DContext.clearRect(0, 0, 1000, 150);
     var label = "temp";
     var data = {
-        labels: ["13-10-2016", "test2", "test3", "test4"],
+        labels: historyData.time,
         datasets: [
             {
                 label: label,
@@ -240,7 +229,7 @@ function drawHistory() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [65, 59, 80, 81],
+                data: historyData.avgTemp,
                 spanGaps: false,
             }
         ]
@@ -257,13 +246,13 @@ function drawHistory() {
                 display: false
             }],
             xAxes: [{
-                display: false
+                //display: false
             }]
         }
     }
     });
 }
-
+/*
 function drawSlider() {
     // DRAW DATA SLIDER
     var sliderCanvas = document.getElementById("historySliderCanvas");
@@ -279,5 +268,5 @@ function drawSlider() {
     slider2DContext.moveTo(sliderPos+1, 0);
     slider2DContext.lineTo(sliderPos+1, 100);
     slider2DContext.stroke();
-}
+}*/
 
