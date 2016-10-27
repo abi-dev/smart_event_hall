@@ -208,7 +208,7 @@ function resetView() {
     document.getElementById("zoomnumber").value = 0;
     document.getElementById("rotnumber").value = 0;
 }
-
+/*
 function onSliderCanvasClicked(e) {
     var surface = document.getElementById("sliderCanvasContent");
     if (e.x != undefined && e.y != undefined)
@@ -237,7 +237,7 @@ function onSliderCanvasClicked(e) {
 
 function onSliderCanvasReleased() {
     sliderDragActive = false;
-}
+}*/
 
 function modeSelChanged() {
     var modeSel = document.getElementById("modeSel");
@@ -268,19 +268,15 @@ function historyDataChanged() {
     if(curSel != null) {
         $.post("../php/loadHistoryData.php", 
             {
-                mode: ""+document.getElementById("modeSel"),
+                mode: document.getElementById("modeSel").value,
                 startDate: temp.startDate.toISOString().substring(0, 10),
-                dateType: ""+document.getElementById("dateTypeSel"),
-                span: ""+document.getElementById("timeScaleSel"),
+                dateType: document.getElementById("dateTypeSel").value,
+                span: document.getElementById("timeScaleSel").value,
                 curSel: curSel
             },
             function (data) {
                 historyData = JSON.parse(data);
-                console.log(data);
-                /*$.each(historyData, function(time, value) {
-                    console.log(time, value);
-                };*/
-
+                drawHistory();
         });
     }
 }

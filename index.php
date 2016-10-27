@@ -110,13 +110,13 @@
     	    </div>
         </div>
         <div id="sliderCanvasContainer">
-            <div id="sliderCanvasOverlay">
-                <!--<input type="range" id="timeSlider" value="0" step="1" min="0" max="100">-->
-            </div>
-            <div id="sliderCanvasContent">
-                <canvas id="historyDataCanvas" width="1000" height="100"></canvas>
-                <canvas id="historySliderCanvas" width="1000" height="100"></canvas>
-            </div>
+            <!--<div id="sliderCanvasOverlay">
+                <input type="range" id="timeSlider" value="0" step="1" min="0" max="100">
+            </div>-->
+            <!--<div id="sliderCanvasContent">-->
+                <canvas id="historyDataCanvas" width="1000" height="150"></canvas>
+                <!--<canvas id="historySliderCanvas" width="1000" height="150"></canvas>-->
+            <!--</div>-->
         </div>
     </div>
 </body>
