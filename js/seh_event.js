@@ -208,36 +208,6 @@ function resetView() {
     document.getElementById("zoomnumber").value = 0;
     document.getElementById("rotnumber").value = 0;
 }
-/*
-function onSliderCanvasClicked(e) {
-    var surface = document.getElementById("sliderCanvasContent");
-    if (e.x != undefined && e.y != undefined)
-    {
-      var canvX = e.x + document.documentElement.scrollLeft + document.body.scrollLeft;
-      var canvY = e.y + document.documentElement.scrollTop + document.body.scrollTop;
-    }
-    else // Firefox method to get the position
-    {
-      var canvX = e.clientX + document.body.scrollLeft +
-          document.documentElement.scrollLeft;
-      var canvY = e.clientY + document.body.scrollTop +
-          document.documentElement.scrollTop;
-    }
-
-
-    canvX -= surface.offsetLeft;
-    canvY -= surface.offsetTop;
-
-    if((canvX < sliderPos +4)&&(canvX > sliderPos -4)) {
-        sliderDragActive = true;
-    }else {
-        sliderDragActive = false;
-    }
-}
-
-function onSliderCanvasReleased() {
-    sliderDragActive = false;
-}*/
 
 function modeSelChanged() {
     var modeSel = document.getElementById("modeSel");
