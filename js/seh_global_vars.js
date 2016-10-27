@@ -5,12 +5,9 @@
     Author: Benjamin Ableidinger
 */
 
-var lineIndex = null;
+var historyChart;
 
-var historyData = {
-	time: [],
-	avgTemp: []
-};
+var lineIndex = null;
 
 var labels = []; // history chart labels
 

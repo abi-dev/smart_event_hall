@@ -201,10 +201,11 @@ function listMissingData() {
 
 /*  DATA HISTORY CANVAS CONTENT FUNCTIONS   */
 
-function drawHistory() {
+
+function drawHistory(historyData) {
     var historyCanvas = document.getElementById("historyDataCanvas");
     var history2DContext = historyCanvas.getContext("2d");
-    history2DContext.clearRect(0, 0, 1000, 150);
+    //history2DContext.clearRect(0, 0, 1000, 150);
     var label = "temp";
     var data = {
         labels: historyData.time,
@@ -260,7 +261,7 @@ function drawHistory() {
       }
     });
 
-    var historyChart = new Chart(history2DContext, {
+    historyChart = new Chart(history2DContext, {
     type: 'line',
     data: data,
     options: {
@@ -281,24 +282,13 @@ function drawHistory() {
     historyCanvas.onclick = function(e) {
         var selPoint = historyChart.getElementsAtEvent(e);
         lineIndex = selPoint[0]._index;
-        drawHistory();
+        historyChart.data.lineAtIndex = lineIndex;
+        historyChart.update();
     }
 }
-/*
-function drawSlider() {
-    // DRAW DATA SLIDER
-    var sliderCanvas = document.getElementById("historySliderCanvas");
-    var slider2DContext = sliderCanvas.getContext("2d");
-    slider2DContext.clearRect(0, 0, 1000, 150);
 
-    slider2DContext.strokeStyle = 'rgb(0,0,0)';
-    slider2DContext.beginPath();
-    slider2DContext.moveTo(sliderPos, 0);
-    slider2DContext.lineTo(sliderPos, 100);
-    slider2DContext.stroke();
-    slider2DContext.beginPath();
-    slider2DContext.moveTo(sliderPos+1, 0);
-    slider2DContext.lineTo(sliderPos+1, 100);
-    slider2DContext.stroke();
-}*/
-
+function updateHistory(historyData) {
+    historyChart.data.datasets[0].data = historyData.avgTemp;
+    historyChart.data.labels = historyData.time;
+    historyChart.update();
+}

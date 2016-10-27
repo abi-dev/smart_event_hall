@@ -493,7 +493,7 @@ function tick() {
 function webGLStart() {
 	generateColorPlot(); // draw color spectrum
     //initHistory(); // initialize data history chart.js
-    //drawHistory(); // draw historyCanvas
+    drawHistory({time: [], avgTemp: []}); // draw historyCanvas
     //drawSlider();
 
     listMissingData(); // list stations with missing data

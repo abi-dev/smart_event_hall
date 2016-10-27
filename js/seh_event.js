@@ -275,8 +275,9 @@ function historyDataChanged() {
                 curSel: curSel
             },
             function (data) {
+                var historyData = [];
                 historyData = JSON.parse(data);
-                drawHistory();
+                updateHistory(historyData);
         });
     }
 }
