@@ -209,36 +209,6 @@ function resetView() {
     document.getElementById("rotnumber").value = 0;
 }
 
-function onSliderCanvasClicked(e) {
-    var surface = document.getElementById("sliderCanvasContent");
-    if (e.x != undefined && e.y != undefined)
-    {
-      var canvX = e.x + document.documentElement.scrollLeft + document.body.scrollLeft;
-      var canvY = e.y + document.documentElement.scrollTop + document.body.scrollTop;
-    }
-    else // Firefox method to get the position
-    {
-      var canvX = e.clientX + document.body.scrollLeft +
-          document.documentElement.scrollLeft;
-      var canvY = e.clientY + document.body.scrollTop +
-          document.documentElement.scrollTop;
-    }
-
-
-    canvX -= surface.offsetLeft;
-    canvY -= surface.offsetTop;
-
-    if((canvX < sliderPos +4)&&(canvX > sliderPos -4)) {
-        sliderDragActive = true;
-    }else {
-        sliderDragActive = false;
-    }
-}
-
-function onSliderCanvasReleased() {
-    sliderDragActive = false;
-}
-
 function modeSelChanged() {
     var modeSel = document.getElementById("modeSel");
     var historySettings = document.getElementById("historySettingsButton");
@@ -268,19 +238,16 @@ function historyDataChanged() {
     if(curSel != null) {
         $.post("../php/loadHistoryData.php", 
             {
-                mode: ""+document.getElementById("modeSel"),
+                mode: document.getElementById("modeSel").value,
                 startDate: temp.startDate.toISOString().substring(0, 10),
-                dateType: ""+document.getElementById("dateTypeSel"),
-                span: ""+document.getElementById("timeScaleSel"),
+                dateType: document.getElementById("dateTypeSel").value,
+                span: document.getElementById("timeScaleSel").value,
                 curSel: curSel
             },
             function (data) {
+                var historyData = [];
                 historyData = JSON.parse(data);
-                console.log(data);
-                /*$.each(historyData, function(time, value) {
-                    console.log(time, value);
-                };*/
-
+                updateHistory(historyData);
         });
     }
 }

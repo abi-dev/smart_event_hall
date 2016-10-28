@@ -414,7 +414,7 @@ function drawScene() {
 		mvPopMatrix();
     }
 
-    // loop through testdata array and draw temperature data
+    // loop through data array and draw temperature data
     var i = 0;
     while(sensData[i]) {
         if(sensData[i].hallID == document.getElementById("hallSel").value) {
@@ -492,9 +492,8 @@ function tick() {
 // OUTPUTS: none
 function webGLStart() {
 	generateColorPlot(); // draw color spectrum
-    //initHistory(); // initialize data history chart.js
-    drawHistory(); // draw historyCanvas
-    drawSlider();
+
+    drawHistory({time: [], avgTemp: []}); // draw historyCanvas
 
     listMissingData(); // list stations with missing data
 
@@ -516,33 +515,12 @@ function webGLStart() {
 	document.getElementById("webGLCanvas").onmouseover = function() {onMouseOverWebGL()};
 	document.getElementById("webGLCanvas").onmouseout = function() {onMouseOutWebGL()};
 
-    // add mouseoverSliderCanvas events
-    document.getElementById("sliderCanvasContent").onmouseover = function() {onMouseOverSliderCanvas()};
-    document.getElementById("sliderCanvasContent").onmouseout = function() {onMouseOutSliderCanvas()};
-
     // add mouseposition
     canvas.addEventListener("mousedown", getPosition, false);
-
-    var sliderCanvas = document.getElementById("historySliderCanvas");
-    sliderCanvas.addEventListener("mousedown", onSliderCanvasClicked, false);
-    sliderCanvas.addEventListener("mouseup", onSliderCanvasReleased, false);
 
     // set background color of the canvas
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     gl.enable(gl.DEPTH_TEST);
-
-    // set testdata, including invalid/missing data
-    /*sensData[0] = {hallID:1, temp:19, hum:0, pos:[-2.4,null,0.75]};
-    sensData[1] = {hallID:1, temp:13, hum:0, pos:[-1.0,0,0.75]};
-    sensData[2] = {hallID:1, temp:14, hum:0, pos:[1.0,0,0.75]};
-    sensData[3] = {hallID:1, temp:12, hum:0, pos:[2.4,0,0.75]};
-    sensData[4] = {hallID:1, temp:27, hum:0, pos:[-2.4,0,-0.75]};
-    sensData[5] = {hallID:1, temp:22, hum:0, pos:[-1.0,0,-0.75]};
-    sensData[6] = {hallID:1, temp:20, hum:50, pos:[1.0,0,-0.75]};
-    sensData[7] = {hallID:1, temp:19, hum:null, pos:[2.4,0,-0.75]};
-
-    sensData[8] = {hallID:2, temp:19, hum:0, pos:[-0.5,0,0]};
-    sensData[9] = {hallID:2, temp:13, hum:0, pos:[0.5,0,0]};*/
 
     tick();
 }

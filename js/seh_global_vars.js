@@ -5,7 +5,9 @@
     Author: Benjamin Ableidinger
 */
 
-var historyData = [];
+var historyChart;
+
+var lineIndex = null;
 
 var labels = []; // history chart labels
 
