@@ -5,6 +5,10 @@
     Author: Benjamin Ableidinger
 */
 
+var selDate = new Date();
+
+var historyData3D = {};
+
 var historyChart;
 
 var lineIndex = null;

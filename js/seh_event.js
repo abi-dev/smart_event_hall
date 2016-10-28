@@ -240,14 +240,18 @@ function historyDataChanged() {
             {
                 mode: document.getElementById("modeSel").value,
                 startDate: temp.startDate.toISOString().substring(0, 10),
+                selDate: selDate,
                 dateType: document.getElementById("dateTypeSel").value,
                 span: document.getElementById("timeScaleSel").value,
                 curSel: curSel
             },
             function (data) {
-                var historyData = [];
+                var historyData = {};
                 historyData = JSON.parse(data);
-                updateHistory(historyData);
+                historyData3D = historyData.stationDataRead;
+                console.log(historyData);
+                console.log(data);
+                updateHistory(historyData.dataRead);
         });
     }
 }

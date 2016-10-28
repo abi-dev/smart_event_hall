@@ -284,6 +284,7 @@ function drawHistory(historyData) {
         lineIndex = selPoint[0]._index;
         historyChart.data.lineAtIndex = lineIndex;
         historyChart.update();
+        selDate = historyChart.data.labels[lineIndex];
     }
 }
 

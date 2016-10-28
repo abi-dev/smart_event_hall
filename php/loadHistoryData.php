@@ -36,7 +36,7 @@
         $dataID = 0;
 		while( $row = mysqli_fetch_assoc($res) )
 		{
-            $dataRead['time'][$dataID] = date('d.m.Y', strtotime($row['time']));
+            $dataRead['time'][$dataID] = date('Y-m-d h:m:s', strtotime($row['time']));
             $dataRead['avgTemp'][$dataID] = $row['avgTemp'];
             $dataID++;
 		}
@@ -44,11 +44,10 @@
 
     /* GET HISTORY DATA FOR EVERY STATION FOR SELECTED TIME */
 
-    $q = "select time, avg(temp) as avgTemp from sensData 
-    where sensID = ".$_POST['curSel']." 
-    and date(time) >= \"".$_POST['startDate']."\" 
-    group by year(time)".$groupBy." 
-    limit 20";
+    $q = "select sensID, time, avg(temp) as avgTemp from sensData where 
+        date(time) >= \"".$_POST['selDate+']."\" 
+        group by year(time)".$groupBy.", sensID 
+        limit 3";
 
     $res = mysqli_query($con, $q);
     if( !$res ) die("Query failed:".mysqli_error($con) );
@@ -56,16 +55,12 @@
     if( mysqli_num_rows($res) >0 )
     {
         $stationDataRead = array();
-        $stationDataRead['stationID'] = array();
-        $stationDataRead['avgTemp'] = array();
 
-        $dataID = 0;
         while( $row = mysqli_fetch_assoc($res) )
         {
-            $stationDataRead['time'][$dataID] = date('d.m.Y', strtotime($row['time']));
-            $stationDataRead['avgTemp'][$dataID] = $row['avgTemp'];
-            $dataID++;
+            $stationDataRead[$row['sensID']] = $row['avgTemp'];
         }
+    } else {
     }
 
     $return = array();
