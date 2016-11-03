@@ -70,13 +70,13 @@ function unSelStationCalled() {
     var WebGLData = document.getElementById("webgldata");
     WebGLData.innerHTML = ''; // clear div element
     listMissingData(); // draw missing data overview
+    resetHistory();
 }
 
 // Gets mouseposition when left mousebutton is clicked.
 // INPUTS:  event   ... browser mouse event
 // OUTPUTS: none
-function getPosition(event)
-{
+function getPosition(event) {
     var canvas = document.getElementById("webGLCanvas");
     var surface = document.getElementById("surface");
 
@@ -218,6 +218,8 @@ function modeSelChanged() {
         historySettings.style.visibility = "visible";
         historySettings.innerHTML = "Settings";
     }
+    resetHistory();
+    historyDataChanged();
 }
 
 function historySettingsButtonClicked() {
@@ -246,11 +248,21 @@ function historyDataChanged() {
                 curSel: curSel
             },
             function (data) {
-                var historyData = {};
-                historyData = JSON.parse(data);
-                historyData3D = historyData.stationDataRead;
-                console.log(historyData);
-                console.log(data);
+                if(data) {
+                    var historyData = {};
+                    historyData = JSON.parse(data);
+                    historyData3D.data = historyData.stationDataRead;
+                    historyData3D.pos = historyData.posData;
+                    if(historyData3D.data == null) {
+                        console.log('No data found for selected time.');
+                    } else {
+                        console.log('3DHistoryData loaded.');
+                    }
+                    console.log('HistoryDataChart loaded successfully.');
+                } else {
+                    console.log('No historyData.');
+                }
+                
                 updateHistory(historyData.dataRead);
         });
     }

@@ -7,7 +7,10 @@
 
 var selDate = new Date();
 
-var historyData3D = {};
+var historyData3D = {
+	data: [],
+	pos: []
+};
 
 var historyChart;
 

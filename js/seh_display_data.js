@@ -205,8 +205,10 @@ function listMissingData() {
 function drawHistory(historyData) {
     var historyCanvas = document.getElementById("historyDataCanvas");
     var history2DContext = historyCanvas.getContext("2d");
-    //history2DContext.clearRect(0, 0, 1000, 150);
+    history2DContext.clearRect(0, 0, 1000, 150);
     var label = "temp";
+    lineIndex = 10;
+    selDate = historyData.time[lineIndex];
     var data = {
         labels: historyData.time,
         datasets: [
@@ -270,7 +272,7 @@ function drawHistory(historyData) {
         },
         scales: {
             yAxes: [{
-                display: false
+                //display: false
             }],
             xAxes: [{
                 //display: false
@@ -281,10 +283,16 @@ function drawHistory(historyData) {
 
     historyCanvas.onclick = function(e) {
         var selPoint = historyChart.getElementsAtEvent(e);
-        lineIndex = selPoint[0]._index;
-        historyChart.data.lineAtIndex = lineIndex;
-        historyChart.update();
-        selDate = historyChart.data.labels[lineIndex];
+        if (selPoint[0]) {
+            lineIndex = selPoint[0]._index;
+            historyChart.data.lineAtIndex = lineIndex;
+            historyChart.update();
+            selDate = historyChart.data.labels[lineIndex];
+            historyDataChanged();
+            loadData();
+        } else {
+            console.log('No hits dectected.');
+        }   
     }
 }
 
@@ -292,4 +300,13 @@ function updateHistory(historyData) {
     historyChart.data.datasets[0].data = historyData.avgTemp;
     historyChart.data.labels = historyData.time;
     historyChart.update();
+}
+
+function resetHistory()  {
+    loadData();
+    var historyCanvas = document.getElementById("historyDataCanvas");
+    var history2DContext = historyCanvas.getContext("2d");
+    history2DContext.clearRect(0, 0, 1000, 150);
+    selDate = null;
+    sensData = [];
 }

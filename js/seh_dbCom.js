@@ -10,7 +10,7 @@ function loadData() {
 	elemCount = null;
 	document.getElementById("datacont").innerHTML = "";
 
-	if(document.getElementById("modeSel").value == 0) {
+	if(document.getElementById("modeSel").value == 0) { // Current / Most recent mode
 		$.post("../php/loadData.php", 
 		{
 			mode: ""+document.getElementById("modeSel"),
@@ -42,20 +42,17 @@ function loadData() {
 				listMissingData();
 			}
 		});
-	} else if(document.getElementById("modeSel").value == 1) {
+	} else if(document.getElementById("modeSel").value == 1) { // History mode
 		var i = 0;
-		while (sensData[i]) {
-			if(historyData3D[i]) {
-				sensData[i].temp = historyData3D[i].temp;
-			} else {
-				var index = sensData.indexOf(i);
-				if (index > -1) {
-				    sensData.splice(index, 1);
-				}
-			}
+		sensData = [];
+		while(historyData3D.data[i] != null) {
+			sensData[i] = {};
+			sensData[i].temp = historyData3D.data[i];
+			sensData[i].pos = [historyData3D.pos[i][0],historyData3D.pos[i][1],historyData3D.pos[i][2]];
+			sensData[i].hallID = historyData3D.pos[i][3];
+			//console.log(sensData);
 			i++;
 		}
-		//sensData = historyData3D;
 	}
 
 	// call loadData every 10 seconds
