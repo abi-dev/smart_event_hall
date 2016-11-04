@@ -43,19 +43,21 @@
 		}
 	}
 
+    $stationDataRead = array();
+
     /* GET HISTORY DATA FOR EVERY STATION FOR SELECTED TIME */
     if($_POST['selDate'] != null) {
-        $q = "select distinct sensID, time, avg(temp) as avgTemp from sensData where 
-            time >= \"".$_POST['selDate']."\" 
-            group by year(time)".$groupBy.", sensID 
-            limit 3";
+
+        $q = "select sensID, avgTemp, min(time) as time from
+                (select sensID, time, avg(temp) as avgTemp from sensData where time >= \"".$_POST['selDate']."\" 
+                    group by year(time)".$groupBy.", sensID) as avgData
+                where time <= \"".date('Y-m-d h:m:s', strtotime($_POST['selDate'])+1)."\" group by sensID";
 
         $res = mysqli_query($con, $q);
         if( !$res ) die("Query failed:".mysqli_error($con) );
 
         if( mysqli_num_rows($res) >0 )
         {
-            $stationDataRead = array();
 
             while( $row = mysqli_fetch_assoc($res) )
             {

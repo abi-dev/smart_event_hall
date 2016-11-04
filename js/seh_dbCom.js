@@ -45,13 +45,26 @@ function loadData() {
 	} else if(document.getElementById("modeSel").value == 1) { // History mode
 		var i = 0;
 		sensData = [];
-		while(historyData3D.data[i] != null) {
-			sensData[i] = {};
-			sensData[i].temp = historyData3D.data[i];
-			sensData[i].pos = [historyData3D.pos[i][0],historyData3D.pos[i][1],historyData3D.pos[i][2]];
-			sensData[i].hallID = historyData3D.pos[i][3];
-			//console.log(sensData);
-			i++;
+		try {
+		  while(historyData3D.data[i] != null) {
+				sensData[i] = {};
+				sensData[i].temp = historyData3D.data[i];
+				sensData[i].pos = [historyData3D.pos[i][0],historyData3D.pos[i][1],historyData3D.pos[i][2]];
+				sensData[i].hallID = historyData3D.pos[i][3];
+				//console.log(sensData);
+				i++;
+			}
+		} catch (e) {
+		  if (e instanceof TypeError) {
+		  	console.log('historyData3D.data is null');
+		    // ignore TypeError
+		  } 
+		  else if(e instanceof RangeError) {
+		    // handle RangeError
+		  }
+		  else {
+		    // something else
+		  } 
 		}
 	}
 

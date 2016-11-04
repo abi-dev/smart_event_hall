@@ -230,40 +230,59 @@ function historySettingsButtonClicked() {
 function historyDataChanged() {
     var timeScale = document.getElementById("timeScaleSel");
     var dateTypeSel = document.getElementById("dateTypeSel");
-    var date = document.getElementById("fromDate");
+    var dateInput = document.getElementById("fromDate");
 
-    date = new Date(date.value);
+    date = new Date(dateInput.value);
+
     var startDate = new Date();
 
     var temp = toStartDate(timeScale.value, dateTypeSel.value, date);
-    
-    if(curSel != null) {
-        $.post("../php/loadHistoryData.php", 
-            {
-                mode: document.getElementById("modeSel").value,
-                startDate: temp.startDate.toISOString().substring(0, 10),
-                selDate: selDate,
-                dateType: document.getElementById("dateTypeSel").value,
-                span: document.getElementById("timeScaleSel").value,
-                curSel: curSel
-            },
-            function (data) {
-                if(data) {
-                    var historyData = {};
-                    historyData = JSON.parse(data);
-                    historyData3D.data = historyData.stationDataRead;
-                    historyData3D.pos = historyData.posData;
-                    if(historyData3D.data == null) {
-                        console.log('No data found for selected time.');
+
+    try {
+      temp.startDate = temp.startDate.toISOString().substring(0, 10);
+
+      if(curSel != null) {
+            $.post("../php/loadHistoryData.php", 
+                {
+                    mode: document.getElementById("modeSel").value,
+                    startDate: temp.startDate,
+                    endDate: temp.endDate,
+                    selDate: selDate,
+                    dateType: document.getElementById("dateTypeSel").value,
+                    span: document.getElementById("timeScaleSel").value,
+                    curSel: curSel
+                },
+                function (data) {
+                    if(data) {
+                        var historyData = {};
+                        historyData = JSON.parse(data);
+                        historyData3D.data = historyData.stationDataRead;
+                        historyData3D.pos = historyData.posData;
+                        if(historyData3D.data == null) {
+                            console.log('No data found for selected time.');
+                        } else {
+                            console.log('3DHistoryData loaded.');
+                        }
+                        console.log('HistoryDataChart loaded successfully.');
                     } else {
-                        console.log('3DHistoryData loaded.');
+                        console.log('No historyData.');
                     }
-                    console.log('HistoryDataChart loaded successfully.');
-                } else {
-                    console.log('No historyData.');
-                }
-                
-                updateHistory(historyData.dataRead);
-        });
-    }
+                    
+                    updateHistory(historyData.dataRead);
+            });
+        }
+    } catch (e) {
+      if (e instanceof TypeError) {
+        // ignore TypeError
+      } 
+      else if(e instanceof RangeError) {
+        console.log('No date input.');
+        // handle RangeError
+      }
+      else {
+        // something else
+      } 
+    }    
+    
+       
 }

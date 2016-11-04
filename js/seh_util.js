@@ -122,6 +122,7 @@ function humToColor(temp) {
 function toStartDate(timeScale, dateType, date) {
 	var startDate = date;
 	var scale = 0;
+	var endDate = date;
 
 	switch(timeScale) {
 		case "0":
@@ -149,14 +150,18 @@ function toStartDate(timeScale, dateType, date) {
 
 	if(dateType == 1) {
 		startDate = date;
+		endDate.setDate((date.getDate() + scale));
 	} else if(dateType == 0) {
-		startDate.setDate((startDate.getDate() - Math.floor(scale/2)));
+		startDate.setDate((date.getDate() - Math.floor(scale/2)));
+		endDate.setDate((date.getDate() + Math.floor(scale/2)));
 	} else if(dateType == 2) {
-		startDate.setDate((startDate.getDate() - scale));
+		endDate = date;
+		startDate.setDate((date.getDate() - scale));
 	}
 
 	return {
 		startDate: startDate,
+		endDate: endDate,
 		scale: scale
 	};
 }
