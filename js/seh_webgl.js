@@ -417,24 +417,24 @@ function drawScene() {
     // loop through data array and draw temperature data
     var i = 0;
     while(sensData[i]) {
-        if(sensData[i].hallID == document.getElementById("hallSel").value) {
+        if(sensInfo[i].hallID == document.getElementById("hallSel").value) {
             if(document.getElementById("dataSel").value == 0) { // only render data points with valid data
                 var selData = sensData[i].temp;
             } else {
                 var selData = sensData[i].hum;
             }
-            if ((sensData[i].pos[0] != null)&&(sensData[i].pos[1] != null)&&(sensData[i].pos[2] != null)&&(selData != null)) {
+            if ((sensInfo[i].pos != null)&&(selData != null)) {
                 if (picked == true) {
-                    drawCube(sensData[i].pos, 0.2, i/256, 1, 1, 1);
+                    drawCube(sensInfo[i].pos, 0.2, i/256, 1, 1, 1);
                 } else {
                     if (curSel == i) {
                         stationSize = 0.25;
-                        drawCubeOutlines(sensData[i].pos, stationSize); // cubesize = 0.2
+                        drawCubeOutlines(sensInfo[i].pos, stationSize); // cubesize = 0.2
                     }
                     if(document.getElementById("dataSel").value == 0) {
-                        drawData(sensData[i].pos, sensData[i].temp);
+                        drawData(sensInfo[i].pos, sensData[i].temp);
                     } else {
-                        drawData(sensData[i].pos, sensData[i].hum);
+                        drawData(sensInfo[i].pos, sensData[i].hum);
                     }
                     
                     stationSize = 0.2;

@@ -19,10 +19,12 @@ function loadData() {
 			span: ""+document.getElementById("timeScaleSel")
 		},
     	function (data) {
-	    	sensData = JSON.parse(data);
-	    	for(var i = 0; i<sensData.length;i++) {
+	    	var data = JSON.parse(data);
+	    	sensData = data.sensData;
+	    	sensInfo = data.sensInfo;
+	    	/*for(var i = 0; i<sensData.length;i++) {
 					sensData[i].pos = [sensData[i].posX, sensData[i].posY, sensData[i].posZ];
-				}
+				}*/
 			
 	    	if(curSel != null) {
 				if (editStation == true) {
@@ -48,9 +50,10 @@ function loadData() {
 		try {
 		  while(historyData3D.data[i] != null) {
 				sensData[i] = {};
+				//sensInfo[i] = {};
 				sensData[i].temp = historyData3D.data[i];
-				sensData[i].pos = [historyData3D.pos[i][0],historyData3D.pos[i][1],historyData3D.pos[i][2]];
-				sensData[i].hallID = historyData3D.pos[i][3];
+				sensInfo[i].pos = [historyData3D.pos[i][0],historyData3D.pos[i][1],historyData3D.pos[i][2]];
+				sensInfo[i].hallID = historyData3D.pos[i][3];
 				//console.log(sensData);
 				i++;
 			}

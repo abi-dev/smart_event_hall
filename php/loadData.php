@@ -30,6 +30,8 @@
 	$res = mysqli_query($con, $q);
 	if( !$res )	die("Query failed:".mysqli_error($con) );
 
+	$sensInfo = array();
+
 	if( mysqli_num_rows($res) >0 )
 	{
 		while( $row = mysqli_fetch_assoc($res) )
@@ -46,9 +48,14 @@
 				$dataRead[$row['sensID']]['posY'] = $row['posY'];
 				$dataRead[$row['sensID']]['posZ'] = $row['posZ'];
 			}
+			$sensInfo[$row['sensID']]['pos'] = [$row['posX'],$row['posY'],$row['posZ']];
+			$sensInfo[$row['sensID']]['hallID'] = $row['hallID'];
 		}
 	}
 	$elemCount = count($dataRead);
 
-	echo json_encode($dataRead);
+	$return['sensData'] = $dataRead;
+	$return['sensInfo'] = $sensInfo;
+
+	echo json_encode($return);
 ?>

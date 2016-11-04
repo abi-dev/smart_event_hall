@@ -54,7 +54,8 @@ var frameHeight = 800; // height of the webgl canvas
 
 var lastTime = 0; // time passed since first render of the scene
 
-var sensData = []; // stores test data array
+var sensInfo = [];
+var sensData = []; // stores sensData
 var colorPicked = new Uint8Array(4); // color (rgb) of the position clicked on (picking)
 var curSel = null; // currently selected station; null = no station selected
 var hallSelCur = null; // currently selected hall

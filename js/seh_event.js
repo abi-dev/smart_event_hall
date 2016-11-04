@@ -220,6 +220,7 @@ function modeSelChanged() {
     }
     resetHistory();
     historyDataChanged();
+    listMissingData();
 }
 
 function historySettingsButtonClicked() {
