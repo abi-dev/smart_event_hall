@@ -18,9 +18,9 @@
     	$groupBy = ', date(time), hour(time)';
     }
 
-    $q = "select time, avg(temp) as avgTemp from sensData 
+    $q = "select distinct time, avg(temp) as avgTemp from sensData 
     where sensID = ".$_POST['curSel']." 
-    and date(time) >= \"".$_POST['startDate']."\" 
+    and time >= \"".$_POST['startDate'].' 00:00:00'."\" 
     group by year(time)".$groupBy." 
     limit 20";
 
@@ -36,41 +36,65 @@
         $dataID = 0;
 		while( $row = mysqli_fetch_assoc($res) )
 		{
-            $dataRead['time'][$dataID] = date('d.m.Y', strtotime($row['time']));
+            //$dataRead['time'][$dataID] = date('Y-m-d h:m:s', strtotime($row['time']));
+            $dataRead['time'][$dataID] = $row['time'];
             $dataRead['avgTemp'][$dataID] = $row['avgTemp'];
             $dataID++;
 		}
 	}
 
-    /* GET HISTORY DATA FOR EVERY STATION FOR SELECTED TIME */
+    $stationDataRead = array();
 
-    $q = "select time, avg(temp) as avgTemp from sensData 
-    where sensID = ".$_POST['curSel']." 
-    and date(time) >= \"".$_POST['startDate']."\" 
-    group by year(time)".$groupBy." 
-    limit 20";
+    /* GET HISTORY DATA FOR EVERY STATION FOR SELECTED TIME */
+    if($_POST['selDate'] != null) {
+
+        $q = "select sensID, avgTemp, min(time) as time from
+                (select sensID, time, avg(temp) as avgTemp from sensData where time >= \"".$_POST['selDate']."\" 
+                    group by year(time)".$groupBy.", sensID) as avgData
+                where time <= \"".date('Y-m-d h:m:s', strtotime($_POST['selDate'])+1)."\" group by sensID";
+
+        $res = mysqli_query($con, $q);
+        if( !$res ) die("Query failed:".mysqli_error($con) );
+
+        if( mysqli_num_rows($res) >0 )
+        {
+
+            while( $row = mysqli_fetch_assoc($res) )
+            {
+                $stationDataRead[$row['sensID']] = $row['avgTemp'];
+            }
+        } else {
+        }
+    } else {
+        $stationDataRead = null;
+    }
+
+
+    // get position data for 3Dhistory
+    $q = "select sensID, posX, posY, posZ, hallID from sensInfo";
 
     $res = mysqli_query($con, $q);
     if( !$res ) die("Query failed:".mysqli_error($con) );
 
     if( mysqli_num_rows($res) >0 )
     {
-        $stationDataRead = array();
-        $stationDataRead['stationID'] = array();
-        $stationDataRead['avgTemp'] = array();
+        $posDataRead = array();
 
-        $dataID = 0;
         while( $row = mysqli_fetch_assoc($res) )
         {
-            $stationDataRead['time'][$dataID] = date('d.m.Y', strtotime($row['time']));
-            $stationDataRead['avgTemp'][$dataID] = $row['avgTemp'];
-            $dataID++;
+            $posDataRead[$row['sensID']] = array();
+            $posDataRead[$row['sensID']] = [$row['posX'],$row['posY'],$row['posZ'], $row['hallID']];
         }
+    } else {
     }
+
+    
 
     $return = array();
     $return['dataRead'] = $dataRead;
     $return['stationDataRead'] = $stationDataRead;
+    $return['posData'] = $posDataRead;
+    $return['debug'] = $_POST['selDate'];
 
 	echo json_encode($return);
 ?>

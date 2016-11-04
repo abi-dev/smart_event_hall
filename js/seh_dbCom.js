@@ -10,7 +10,8 @@ function loadData() {
 	elemCount = null;
 	document.getElementById("datacont").innerHTML = "";
 
-	$.post("../php/loadData.php", 
+	if(document.getElementById("modeSel").value == 0) { // Current / Most recent mode
+		$.post("../php/loadData.php", 
 		{
 			mode: ""+document.getElementById("modeSel"),
 			date: ""+document.getElementById("fromDate"),
@@ -40,7 +41,32 @@ function loadData() {
 			} else {
 				listMissingData();
 			}
-	});
+		});
+	} else if(document.getElementById("modeSel").value == 1) { // History mode
+		var i = 0;
+		sensData = [];
+		try {
+		  while(historyData3D.data[i] != null) {
+				sensData[i] = {};
+				sensData[i].temp = historyData3D.data[i];
+				sensData[i].pos = [historyData3D.pos[i][0],historyData3D.pos[i][1],historyData3D.pos[i][2]];
+				sensData[i].hallID = historyData3D.pos[i][3];
+				//console.log(sensData);
+				i++;
+			}
+		} catch (e) {
+		  if (e instanceof TypeError) {
+		  	console.log('historyData3D.data is null');
+		    // ignore TypeError
+		  } 
+		  else if(e instanceof RangeError) {
+		    // handle RangeError
+		  }
+		  else {
+		    // something else
+		  } 
+		}
+	}
 
 	// call loadData every 10 seconds
 	setTimeout(loadData, 10000);

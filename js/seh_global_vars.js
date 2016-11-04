@@ -5,6 +5,13 @@
     Author: Benjamin Ableidinger
 */
 
+var selDate = new Date();
+
+var historyData3D = {
+	data: [],
+	pos: []
+};
+
 var historyChart;
 
 var lineIndex = null;

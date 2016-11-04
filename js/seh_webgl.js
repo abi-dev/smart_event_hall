@@ -439,6 +439,8 @@ function drawScene() {
                     
                     stationSize = 0.2;
                 }
+            } else {
+                console.log('PosData not set.');
             }
         }
         i++;
