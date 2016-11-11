@@ -248,7 +248,7 @@ function historyDataChanged() {
                     mode: document.getElementById("modeSel").value,
                     startDate: temp.startDate,
                     endDate: temp.endDate,
-                    selDate: selDate,
+                    dateArray: selDate,
                     dateType: document.getElementById("dateTypeSel").value,
                     span: document.getElementById("timeScaleSel").value,
                     curSel: curSel
@@ -265,6 +265,8 @@ function historyDataChanged() {
                             console.log('3DHistoryData loaded.');
                         }
                         console.log('HistoryDataChart loaded successfully.');
+
+                        //console.log(historyData.debug);
                     } else {
                         console.log('No historyData.');
                     }
@@ -283,7 +285,13 @@ function historyDataChanged() {
       else {
         // something else
       } 
-    }    
-    
-       
+    }      
+}
+
+function selectButtonClick(id) {
+    curSel = id;
+    console.log("ID: "+id);
+    historyDataChanged();
+    listMissingData();
+    //setWebGLData();
 }

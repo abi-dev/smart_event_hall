@@ -41,7 +41,7 @@ function setWebGLData() {
     if(sensData[curSel].temp == null) { // no °C if null
         cells[1][1].innerHTML = 'null';
     } else {
-        cells[1][1].innerHTML = sensData[curSel].temp + String.fromCharCode(176) + 'C';
+        cells[1][1].innerHTML = Number(sensData[curSel].temp).toFixed(2) + String.fromCharCode(176) + 'C';
     }
     if(sensData[curSel].hum == null) { // no % if null
         cells[2][1].innerHTML = 'null';
@@ -136,8 +136,8 @@ function setWebGLData() {
 // INPUTS:  none
 // OUTPUTS: none
 function listMissingData() {
+    document.getElementById("webgldata").innerHTML = ""; // clear div
     if(curSel == null) { // only display list if no station is selected
-        document.getElementById("webgldata").innerHTML = ""; // clear div
         // create surrounding html elements
         var WebGLData = document.getElementById("webgldata");
         var content = document.createElement("div");
@@ -200,15 +200,41 @@ function listMissingData() {
         } else if(document.getElementById("modeSel").value == 1) { // History mode
             content.innerHTML = '<b>Existent Stations:</b>';
 
+            var table = document.createElement("table");
+            table.id = 'stationSelect';
+            var rows = [];
+            var cells = [];
+            var i = 0;
+            var j = 0;
+            var selectButton = [];
+
             // insert table creation
             var i = 0;
             while(sensInfo[i]) {
-                content.innerHTML += '</br>Station'+i;
+                if(sensInfo[i].hallID == document.getElementById("hallSel").value) {
+                    //content.innerHTML += '</br>Station'+i;
+
+                    rows[j] = table.insertRow(j);
+                    cells[j] = [];
+                    for(var k=0;k<2;k++) {
+                        cells[j][k] = rows[j].insertCell(k);
+                    }
+                    cells[j][0].innerHTML = 'Station'+i; 
+
+                    selectButton[i] = document.createElement("button");
+                    selectButton[i].innerHTML = 'Select';
+                    selectButton[i].id = i;
+                    selectButton[i].setAttribute("onclick", "javascript: selectButtonClick(this.id);");
+                    selectButton[i].className = 'selectButton';
+                    cells[j][1].appendChild(selectButton[i]);
+
+                    j++;
+                }
                 i++;
             }
             //console.log(sensInfo);
 
-            /*if(j != 0) {
+            if(j != 0) {
                 // create header
                 var header = table.createTHead();
                 var headerRow = header.insertRow(0);
@@ -216,7 +242,9 @@ function listMissingData() {
                 headerCell0.innerHTML = '<b>Station</b>'; 
             } else {
                 content.innerHTML += '</br>none';
-            }*/
+            }
+
+            content.appendChild(table);
         }
         webgldata.appendChild(content);
     }
@@ -311,7 +339,7 @@ function drawHistory(historyData) {
             historyChart.data.lineAtIndex = lineIndex;
             historyChart.update();
             selDate = historyChart.data.labels[lineIndex];
-            historyDataChanged();
+            //historyDataChanged();
             loadData();
         } else {
             console.log('No hits dectected.');

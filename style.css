@@ -181,6 +181,21 @@ ul.datalist li {
 	font-size: 14px;
 }
 
+#stationSelect, #stationSelect tr, #stationSelect td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+#stationSelect {
+	width: 175px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	font-family: "Verdana";
+	font-size: 14px;
+}
+
 #WebGLDataMissing, #WebGLDataMissing tr, #WebGLDataMissing td {
 	border: 1px solid black;
 	border-collapse: collapse;

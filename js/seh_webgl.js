@@ -416,8 +416,8 @@ function drawScene() {
 
     // loop through data array and draw temperature data
     var i = 0;
-    while(sensData[i]) {
-        if(sensInfo[i].hallID == document.getElementById("hallSel").value) {
+    while(sensInfo[i]) {
+        if((sensInfo[i].hallID == document.getElementById("hallSel").value)&&(sensData[i])) {
             if(document.getElementById("dataSel").value == 0) { // only render data points with valid data
                 var selData = sensData[i].temp;
             } else {
@@ -441,6 +441,10 @@ function drawScene() {
                 }
             } else {
                 console.log('PosData not set.');
+            }
+        } else if(sensInfo[i].hallID == document.getElementById("hallSel").value) {
+            if (sensInfo[i].pos != null) {
+                drawCubeOutlines(sensInfo[i].pos, 0.2);
             }
         }
         i++;

@@ -48,10 +48,11 @@ function loadData() {
 		var i = 0;
 		sensData = [];
 		try {
-		  while(historyData3D.data[i] != null) {
+		  while(historyData3D.data[selDate][i] != null) {
 				sensData[i] = {};
 				//sensInfo[i] = {};
-				sensData[i].temp = historyData3D.data[i];
+				sensData[i].temp = historyData3D.data[selDate][i];
+				console.log(historyData3D.data[selDate][i]);
 				sensInfo[i].pos = [historyData3D.pos[i][0],historyData3D.pos[i][1],historyData3D.pos[i][2]];
 				sensInfo[i].hallID = historyData3D.pos[i][3];
 				//console.log(sensData);

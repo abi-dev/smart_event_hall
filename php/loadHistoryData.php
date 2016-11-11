@@ -45,13 +45,14 @@
 
     $stationDataRead = array();
 
-    /* GET HISTORY DATA FOR EVERY STATION FOR SELECTED TIME */
-    if($_POST['selDate'] != null) {
-
+    /* GET HISTORY DATA FOR EVERY STATION FOR EACH TIME */
+    $debug = array();
+    $i = 0;
+    foreach ($dataRead['time'] as $key => $value) {
         $q = "select sensID, avgTemp, min(time) as time from
-                (select sensID, time, avg(temp) as avgTemp from sensData where time >= \"".$_POST['selDate']."\" 
+                (select sensID, time, avg(temp) as avgTemp from sensData where time >= \"".$value."\" 
                     group by year(time)".$groupBy.", sensID) as avgData
-                where time <= \"".date('Y-m-d h:m:s', strtotime($_POST['selDate'])+1)."\" group by sensID";
+                where time <= \"".date('Y-m-d h:m:s', strtotime($value)+1)."\" group by sensID";
 
         $res = mysqli_query($con, $q);
         if( !$res ) die("Query failed:".mysqli_error($con) );
@@ -61,13 +62,13 @@
 
             while( $row = mysqli_fetch_assoc($res) )
             {
-                $stationDataRead[$row['sensID']] = $row['avgTemp'];
+                $stationDataRead[$value][$row['sensID']] = $row['avgTemp'];
             }
         } else {
         }
-    } else {
-        $stationDataRead = null;
     }
+
+    
 
 
     // get position data for 3Dhistory
@@ -94,7 +95,7 @@
     $return['dataRead'] = $dataRead;
     $return['stationDataRead'] = $stationDataRead;
     $return['posData'] = $posDataRead;
-    $return['debug'] = $_POST['selDate'];
+    $return['debug'] = $stationDataRead;
 
 	echo json_encode($return);
 ?>
