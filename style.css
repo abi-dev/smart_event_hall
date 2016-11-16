@@ -263,6 +263,21 @@ footer  {
 	visibility: hidden;
 }
 
+.animateButton {
+	height: 50px;
+	width: 50px;
+	font-size: 30px;
+	margin: 10px;
+}
+
+#playButton {
+	color: green;
+}
+
+#pauseButton {
+	color: red;
+}
+
 /* Popup container */
 .popup {
     position: relative;

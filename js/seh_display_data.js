@@ -136,13 +136,14 @@ function setWebGLData() {
 // INPUTS:  none
 // OUTPUTS: none
 function listMissingData() {
-    document.getElementById("webgldata").innerHTML = ""; // clear div
+    var WebGLData = document.getElementById("webgldata");
+    var contentTop = document.createElement("div");
+    var contentBottom = document.createElement("div");
+    WebGLData.innerHTML = ""; // clear div
     if(curSel == null) { // only display list if no station is selected
         // create surrounding html elements
-        var WebGLData = document.getElementById("webgldata");
-        var content = document.createElement("div");
         if(document.getElementById("modeSel").value == 0) { // Current / Most recent mode
-            content.innerHTML = '<b>Data missing:</b>';
+            contentTop.innerHTML = '<b>Data missing:</b>';
             var table = document.createElement("table");
             table.id = 'WebGLDataMissing';
             var rows = [];
@@ -192,13 +193,13 @@ function listMissingData() {
                 var headerCell0 = headerRow.insertCell(0); var headerCell1 = headerRow.insertCell(1); var headerCell2 = headerRow.insertCell(2);
                 headerCell0.innerHTML = '<b>Station</b>'; headerCell1.innerHTML = '<b>StatusMsg</b>'; headerCell2.innerHTML = '';
             } else {
-                content.innerHTML += '</br>none';
+                contentTop.innerHTML += '</br>none';
             }
 
-            content.appendChild(table);
-            //webgldata.appendChild(content);
+            contentTop.appendChild(table);
+            //webgldata.appendChild(contentTop);
         } else if(document.getElementById("modeSel").value == 1) { // History mode
-            content.innerHTML = '<b>Existent Stations:</b>';
+            contentTop.innerHTML = '<b>Existent Stations:</b>';
 
             var table = document.createElement("table");
             table.id = 'stationSelect';
@@ -212,7 +213,7 @@ function listMissingData() {
             var i = 0;
             while(sensInfo[i]) {
                 if(sensInfo[i].hallID == document.getElementById("hallSel").value) {
-                    //content.innerHTML += '</br>Station'+i;
+                    //contentTop.innerHTML += '</br>Station'+i;
 
                     rows[j] = table.insertRow(j);
                     cells[j] = [];
@@ -241,13 +242,35 @@ function listMissingData() {
                 var headerCell0 = headerRow.insertCell(0); var headerCell1 = headerRow.insertCell(1);
                 headerCell0.innerHTML = '<b>Station</b>'; 
             } else {
-                content.innerHTML += '</br>none';
+                contentTop.innerHTML += '</br>none';
             }
 
-            content.appendChild(table);
+            contentTop.appendChild(table);
         }
-        webgldata.appendChild(content);
+    } else if(document.getElementById("modeSel").value == 1) { // a station is selected and mode = HistoryMode
+        contentTop.innerHTML += "Animate History: </br>";
+
+        // generate animation start / play button
+        playButton = document.createElement("button");
+        playButton.innerHTML = String.fromCharCode(9658);
+        playButton.id = 'playButton';
+        playButton.setAttribute("onclick", "playButtonClicked();");
+        playButton.className = 'animateButton';
+
+        // generate animation stop / pause button
+        pauseButton = document.createElement("button");
+        pauseButton.innerHTML = String.fromCharCode(10074)+String.fromCharCode(10074);
+        pauseButton.id = 'pauseButton';
+        pauseButton.setAttribute("onclick", "pauseButtonClicked();");
+        pauseButton.className = 'animateButton';
+
+
+        // append buttons to html div
+        contentTop.appendChild(playButton);
+        contentTop.appendChild(pauseButton);
     }
+    webgldata.appendChild(contentTop);
+    webgldata.appendChild(contentBottom);
 }
 
 /*  DATA HISTORY CANVAS CONTENT FUNCTIONS   */
@@ -348,9 +371,35 @@ function drawHistory(historyData) {
 }
 
 function updateHistory(historyData) {
-    historyChart.data.datasets[0].data = historyData.avgTemp;
-    historyChart.data.labels = historyData.time;
-    historyChart.update();
+    try {
+        historyChart.data.datasets[0].data = historyData.avgTemp;
+        historyChart.data.labels = historyData.time;
+        historyChart.update();
+        console.log('Updated historyChart data.');
+    } catch (e) {
+      if (e instanceof TypeError) {
+        console.log('No historydata to update from.');
+      } 
+      else if(e instanceof RangeError) {
+      }
+      else {
+      } 
+    }
+}
+
+function animateHistory() {
+    if(animationInProgress==true && lineIndex!=null) {
+        if(lineIndex < 20) {
+            lineIndex++;
+        } else {
+            lineIndex = 0;
+        }
+        historyChart.data.lineAtIndex = lineIndex;
+        selDate = historyChart.data.labels[lineIndex];
+        historyChart.update();
+    }
+    // call every 0.5 seconds
+    setTimeout(animateHistory, 500);
 }
 
 function resetHistory()  {
@@ -360,4 +409,6 @@ function resetHistory()  {
     history2DContext.clearRect(0, 0, 1000, 150);
     selDate = null;
     sensData = [];
+    historyData = {};
+    updateHistory();
 }

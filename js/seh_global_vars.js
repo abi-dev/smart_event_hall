@@ -5,6 +5,8 @@
     Author: Benjamin Ableidinger
 */
 
+var animationInProgress = 0;
+
 var selDate = new Date();
 
 var historyData3D = {

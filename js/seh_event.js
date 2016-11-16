@@ -229,63 +229,65 @@ function historySettingsButtonClicked() {
 }
 
 function historyDataChanged() {
-    var timeScale = document.getElementById("timeScaleSel");
-    var dateTypeSel = document.getElementById("dateTypeSel");
-    var dateInput = document.getElementById("fromDate");
+    if(document.getElementById("modeSel").value == 1) {
+        var timeScale = document.getElementById("timeScaleSel");
+        var dateTypeSel = document.getElementById("dateTypeSel");
+        var dateInput = document.getElementById("fromDate");
 
-    date = new Date(dateInput.value);
+        date = new Date(dateInput.value);
 
-    var startDate = new Date();
+        var startDate = new Date();
 
-    var temp = toStartDate(timeScale.value, dateTypeSel.value, date);
+        var temp = toStartDate(timeScale.value, dateTypeSel.value, date);
 
-    try {
-      temp.startDate = temp.startDate.toISOString().substring(0, 10);
+        try {
+          temp.startDate = temp.startDate.toISOString().substring(0, 10);
 
-      if(curSel != null) {
-            $.post("../php/loadHistoryData.php", 
-                {
-                    mode: document.getElementById("modeSel").value,
-                    startDate: temp.startDate,
-                    endDate: temp.endDate,
-                    dateArray: selDate,
-                    dateType: document.getElementById("dateTypeSel").value,
-                    span: document.getElementById("timeScaleSel").value,
-                    curSel: curSel
-                },
-                function (data) {
-                    if(data) {
-                        var historyData = {};
-                        historyData = JSON.parse(data);
-                        historyData3D.data = historyData.stationDataRead;
-                        historyData3D.pos = historyData.posData;
-                        if(historyData3D.data == null) {
-                            console.log('No data found for selected time.');
+          if(curSel != null) {
+                $.post("../php/loadHistoryData.php", 
+                    {
+                        mode: document.getElementById("modeSel").value,
+                        startDate: temp.startDate,
+                        endDate: temp.endDate,
+                        dateArray: selDate,
+                        dateType: document.getElementById("dateTypeSel").value,
+                        span: document.getElementById("timeScaleSel").value,
+                        curSel: curSel
+                    },
+                    function (data) {
+                        if(data) {
+                            var historyData = {};
+                            historyData = JSON.parse(data);
+                            historyData3D.data = historyData.stationDataRead;
+                            historyData3D.pos = historyData.posData;
+                            if(historyData3D.data == null) {
+                                console.log('No data found for selected time.');
+                            } else {
+                                console.log('3DHistoryData loaded.');
+                            }
+                            console.log('HistoryDataChart loaded successfully.');
+
+                            //console.log(historyData.debug);
                         } else {
-                            console.log('3DHistoryData loaded.');
+                            console.log('No historyData.');
                         }
-                        console.log('HistoryDataChart loaded successfully.');
-
-                        //console.log(historyData.debug);
-                    } else {
-                        console.log('No historyData.');
-                    }
-                    
-                    updateHistory(historyData.dataRead);
-            });
-        }
-    } catch (e) {
-      if (e instanceof TypeError) {
-        // ignore TypeError
-      } 
-      else if(e instanceof RangeError) {
-        console.log('No date input.');
-        // handle RangeError
-      }
-      else {
-        // something else
-      } 
-    }      
+                        
+                        updateHistory(historyData.dataRead);
+                });
+            }
+        } catch (e) {
+          if (e instanceof TypeError) {
+            // ignore TypeError
+          } 
+          else if(e instanceof RangeError) {
+            console.log('No date input.');
+            // handle RangeError
+          }
+          else {
+            // something else
+          } 
+        }  
+    }
 }
 
 function selectButtonClick(id) {
@@ -294,4 +296,13 @@ function selectButtonClick(id) {
     historyDataChanged();
     listMissingData();
     //setWebGLData();
+}
+
+function playButtonClicked() {
+    animationInProgress = true;
+    animateHistory();
+}
+
+function pauseButtonClicked() {
+    animationInProgress = false;
 }

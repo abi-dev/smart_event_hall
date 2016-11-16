@@ -11,6 +11,7 @@ function loadData() {
 	document.getElementById("datacont").innerHTML = "";
 
 	if(document.getElementById("modeSel").value == 0) { // Current / Most recent mode
+		console.log('Updating current data.');
 		$.post("../php/loadData.php", 
 		{
 			mode: ""+document.getElementById("modeSel"),
@@ -22,9 +23,6 @@ function loadData() {
 	    	var data = JSON.parse(data);
 	    	sensData = data.sensData;
 	    	sensInfo = data.sensInfo;
-	    	/*for(var i = 0; i<sensData.length;i++) {
-					sensData[i].pos = [sensData[i].posX, sensData[i].posY, sensData[i].posZ];
-				}*/
 			
 	    	if(curSel != null) {
 				if (editStation == true) {
@@ -45,6 +43,7 @@ function loadData() {
 			}
 		});
 	} else if(document.getElementById("modeSel").value == 1) { // History mode
+		console.log('Updating history data.');
 		var i = 0;
 		sensData = [];
 		try {
@@ -52,7 +51,7 @@ function loadData() {
 				sensData[i] = {};
 				//sensInfo[i] = {};
 				sensData[i].temp = historyData3D.data[selDate][i];
-				console.log(historyData3D.data[selDate][i]);
+				//console.log(historyData3D.data[selDate][i]);
 				sensInfo[i].pos = [historyData3D.pos[i][0],historyData3D.pos[i][1],historyData3D.pos[i][2]];
 				sensInfo[i].hallID = historyData3D.pos[i][3];
 				//console.log(sensData);
@@ -60,6 +59,7 @@ function loadData() {
 			}
 		} catch (e) {
 		  if (e instanceof TypeError) {
+		  	console.log(historyData3D);
 		  	console.log('historyData3D.data is null');
 		    // ignore TypeError
 		  } 
