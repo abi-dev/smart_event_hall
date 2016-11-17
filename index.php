@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="../js/gl-matrix.js"></script>
     <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="../js/Chart.js"></script>
+    <script type="text/javascript" src="../js/spin.min.js"></script>
 	<script type="text/javascript" src="../js/seh_webgl.js"></script>
 	<script type="text/javascript" src="../js/seh_util.js"></script>
 	<script type="text/javascript" src="../js/seh_event.js"></script>

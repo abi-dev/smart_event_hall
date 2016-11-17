@@ -244,6 +244,7 @@ function historyDataChanged() {
           temp.startDate = temp.startDate.toISOString().substring(0, 10);
 
           if(curSel != null) {
+                spinner.spin();
                 $.post("../php/loadHistoryData.php", 
                     {
                         mode: document.getElementById("modeSel").value,
@@ -273,6 +274,7 @@ function historyDataChanged() {
                         }
                         
                         updateHistory(historyData.dataRead);
+                        spinner.stop();
                 });
             }
         } catch (e) {

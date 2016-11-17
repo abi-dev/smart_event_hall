@@ -502,6 +502,8 @@ function webGLStart() {
     drawHistory({time: [], avgTemp: []}); // draw historyCanvas
 
     listMissingData(); // list stations with missing data
+    initSpinner();
+    spinner.stop();
 
     timeSel = null; // use newest data
     loadData(); // start database requests

@@ -11,6 +11,7 @@ function loadData() {
 	document.getElementById("datacont").innerHTML = "";
 
 	if(document.getElementById("modeSel").value == 0) { // Current / Most recent mode
+		spinner.spin();
 		console.log('Updating current data.');
 		$.post("../php/loadData.php", 
 		{
@@ -41,6 +42,7 @@ function loadData() {
 			} else {
 				listMissingData();
 			}
+			spinner.stop();
 		});
 	} else if(document.getElementById("modeSel").value == 1) { // History mode
 		console.log('Updating history data.');
@@ -59,7 +61,7 @@ function loadData() {
 			}
 		} catch (e) {
 		  if (e instanceof TypeError) {
-		  	console.log(historyData3D);
+		  	//console.log(historyData3D);
 		  	console.log('historyData3D.data is null');
 		    // ignore TypeError
 		  } 

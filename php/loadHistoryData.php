@@ -46,13 +46,13 @@
     $stationDataRead = array();
 
     /* GET HISTORY DATA FOR EVERY STATION FOR EACH TIME */
-    $debug = array();
+    $debug = $dataRead['time'];
     $i = 0;
     foreach ($dataRead['time'] as $key => $value) {
         $q = "select sensID, avgTemp, min(time) as time from
                 (select sensID, time, avg(temp) as avgTemp from sensData where time >= \"".$value."\" 
                     group by year(time)".$groupBy.", sensID) as avgData
-                where time <= \"".date('Y-m-d h:m:s', strtotime($value)+1)."\" group by sensID";
+                where time <= \"".date('Y-m-d H:i:s', strtotime($value)+1)."\" group by sensID";
 
         $res = mysqli_query($con, $q);
         if( !$res ) die("Query failed:".mysqli_error($con) );

@@ -5,6 +5,8 @@
     Author: Benjamin Ableidinger
 */
 
+var spinner;
+
 var animationInProgress = 0;
 
 var selDate = new Date();
