@@ -398,8 +398,8 @@ function animateHistory() {
         selDate = historyChart.data.labels[lineIndex];
         historyChart.update();
         loadData();
-        // call every 1 seconds if animation is requested
-        setTimeout(animateHistory, 1000);
+        // call every 0.5 seconds if animation is requested
+        setTimeout(animateHistory, 500);
     }
 }
 
