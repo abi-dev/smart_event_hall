@@ -11,7 +11,8 @@ function loadData() {
 	document.getElementById("datacont").innerHTML = "";
 
 	if(document.getElementById("modeSel").value == 0) { // Current / Most recent mode
-		spinner.spin();
+		var target = document.getElementById('surface3D');
+        spinner.spin(target);
 		console.log('Updating current data.');
 		$.post("../php/loadData.php", 
 		{

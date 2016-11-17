@@ -398,7 +398,7 @@ function animateHistory() {
         selDate = historyChart.data.labels[lineIndex];
         historyChart.update();
         // call every 0.5 seconds if animation is requested
-        setTimeout(animateHistory, 500);
+        setTimeout(animateHistory, 1000);
     }
 }
 

@@ -244,7 +244,8 @@ function historyDataChanged() {
           temp.startDate = temp.startDate.toISOString().substring(0, 10);
 
           if(curSel != null) {
-                spinner.spin();
+                var target = document.getElementById('surface3D');
+                spinner.spin(target);
                 $.post("../php/loadHistoryData.php", 
                     {
                         mode: document.getElementById("modeSel").value,
